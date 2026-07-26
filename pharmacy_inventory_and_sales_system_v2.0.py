@@ -1,5 +1,5 @@
-
-# Pharmacy Inventory and Sales System v2.0
+ 
+# Pharmacy Inventory and Sales System v1.0
 
 def get_medicine_name():
     medicine_name = input("Enter medicine name: ")
@@ -26,38 +26,14 @@ def stock_status(stock_quantity):
     else:
         status = "Enough medicine is in stock!"
     return status
-out_of_stock_medicines = []
-def create_out_of_stock_medicines(status, medicine_name):
-    if status == "Out Of Stock!":
-        out_of_stock_medicines.append(medicine_name)
 
-# def pharmacy_report()
-# maximum_price = prices[0]
-# maximum_price_medicine = ""
-# minimum_price = maximum_price
-# minimum_price_medicine = ""
-# def main_program(price_per_unit, name):
-#     # name = get_medicine_name()
-#     # price_per_unit = get_medicine_price()
-#     # stock_quantity = get_stock_quantity()
-#     # status = stock_status(stock_quantity)
-#     # print(status)
-#     # create_prices(price_per_unit)
-#     # create_out_of_stock_medicines(status, name)
-#     if price_per_unit > maximum_price:
-#         maximum_price = price_per_unit
-#         maximum_price_medicine = name
-#     if price_per_unit < minimum_price:
-#         minimum_price = price_per_unit
-#         minimum_price_medicine = name
-
-def pharmacy_summary(stock_quantity):
-    print("=" * 30)
-    print("      PHARMACY SUMMARY      ")
-    print("=" * 30)
+def pharmacy_summary():
+    print("=" * 36)
+    print("         PHARMACY SUMMARY         ")
+    print("=" * 36)
     print()
     print("Total Medicines Processed      =", num)
-    print("Total Stock Quantity           =", stock_quantity)
+    print("Total Stock Quantity           =", total_stock)
     print("Total Price                    =", total_price)
     print()
     print("Most Expensive Medicine Name   =", maximum_price_medicine)
@@ -67,11 +43,15 @@ def pharmacy_summary(stock_quantity):
     print("Most Cheapest Medicine Price   =", minimum_price)
     print()
     print("Out Of Stock Medicines         =", out_of_stock_medicines)
+    print("=" * 36)
+
+    # MAIN BODY
 
 total_stock = 0
 total_price = 0
 prices = []
 names = []
+out_of_stock_medicines = []
 num = int(input("how many medicines do you want to process? "))
 while num <= 0:
     print("Invalid Input!")
@@ -84,21 +64,23 @@ for i in range(num):
     status = stock_status(stock_quantity)
     print(status)
     prices.append(price_per_unit)
-    create_out_of_stock_medicines(status, name)
-    # main_program(price_per_unit, name)
+    if status == "Out Of Stock!":
+       out_of_stock_medicines.append(name)
     total_stock += stock_quantity
-    total_price += price_per_unit
+    total_price += (price_per_unit * stock_quantity)
+
+    # finding maximum and minimum
+
 maximum_price = prices[0]
 minimum_price = maximum_price
 maximum_price_medicine = names[0]
 minimum_price_medicine = maximum_price_medicine
-for price, name in prices, names:
-    if price > maximum_price:
-        maximum_price = price
-        maximum_price_medicine = name
-    if price < minimum_price:
-        minimum_price = price
-        minimum_price_medicine = name
+for i in range(len(names)):
+    if prices[i] > maximum_price:
+        maximum_price = prices[i]
+        maximum_price_medicine = names[i]
+    if prices[i] < minimum_price:
+        minimum_price = prices[i]
+        minimum_price_medicine = names[i]
     
-pharmacy_summary(stock_quantity)
-
+pharmacy_summary()
